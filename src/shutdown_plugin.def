@@ -1,0 +1,5 @@
+LIBRARY shutdown_plugin
+
+EXPORTS
+	GetFilterTable @1
+
