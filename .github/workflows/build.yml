@@ -11,4 +11,4 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Build
-      run: "Build MinGW.cmd"
+      run: g++ -Wall -shared "-Wl,--dll,--std-call-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
