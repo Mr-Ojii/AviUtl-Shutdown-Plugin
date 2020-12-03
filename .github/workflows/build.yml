@@ -10,5 +10,5 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Setup .NET Core
-      run: "./Build MinGW.cmd"
+    - name: Build
+      run: "Build MinGW.cmd"
