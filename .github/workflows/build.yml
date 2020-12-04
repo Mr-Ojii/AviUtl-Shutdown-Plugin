@@ -7,9 +7,6 @@ jobs:
 
     runs-on: windows-latest
 
-    env:
-      CC: i686-w64-mingw32-gcc
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -23,6 +20,20 @@ jobs:
       run: |
         cd $Env:GITHUB_WORKSPACE
         tar --exclude ".git*"　--exclude "*.zip"　-a -cvf AviUtl-Shutdown-Plugin-MSVC.zip *
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MSYS
+        update: true
+        install: >-
+          mingw-w64-cross-gcc
+    - run: |
+        set MSYSTEM=MINGW32
+        msys2 -c 'i686-w64-mingw32-g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
+    - name: Create Archive(MinGW)
+      run: |
+        cd $Env:GITHUB_WORKSPACE
+        tar --exclude ".git*"　--exclude "*.zip" -a -cvf AviUtl-Shutdown-Plugin-MinGW.zip *
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -43,22 +54,6 @@ jobs:
         asset_path: ./AviUtl-Shutdown-Plugin-MSVC.zip
         asset_name: AviUtl-Shutdown-Plugin-MSVC.zip
         asset_content_type: application/zip
-    - name: Setup MSYS2
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MSYS
-        update: true
-        install: >-
-          mingw-w64-cross-gcc
-    - run: |
-        set MSYSTEM=MINGW32
-        msys2 -c 'i686-w64-mingw32-g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
-#    - name: Build-MinGW
-#      run: g++ -Wall -m32 -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
-    - name: Create Archive(MinGW)
-      run: |
-        cd $Env:GITHUB_WORKSPACE
-        tar --exclude ".git*"　--exclude "*.zip" -a -cvf AviUtl-Shutdown-Plugin-MinGW.zip *
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
