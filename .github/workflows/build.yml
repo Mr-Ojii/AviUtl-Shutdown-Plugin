@@ -47,7 +47,7 @@ jobs:
       run: |
          del AviUtl-Shutdown-Plugin-MSVC.zip
          del shutdown_plugin.auf
-    - run: echo "::add-path::C:\\msys64\\usr\\bin"
+    - uses: msys2/setup-msys2@v2
     - run: pacman -Sy
     - run: pacman --noconfirm -S pacman-mirrors
     - run: pacman --noconfirm -S mingw-w64-cross-gcc
