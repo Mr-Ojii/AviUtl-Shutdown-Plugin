@@ -41,7 +41,7 @@ jobs:
         asset_name: AviUtl-Shutdown-Plugin-MSVC.zip
         asset_content_type: application/zip
     - name: Remove MSVCfile
-       run: |
+      run: |
          del AviUtl-Shutdown-Plugin-MSVC.zip
          del shutdown_plugin.auf
     - name: Build-MinGW
