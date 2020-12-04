@@ -57,7 +57,7 @@ jobs:
           git
     - run: |
         set MSYSTEM=MINGW32
-        msys2 -c 'g++ -Wall -m32 -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
+        msys2 -c 'g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
 #    - name: Build-MinGW
 #      run: g++ -Wall -m32 -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
     - name: Create Archive(MinGW)
