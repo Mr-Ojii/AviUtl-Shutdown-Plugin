@@ -53,7 +53,7 @@ jobs:
         msystem: MSYS
         update: true
         install: >-
-          g++
+          gcc
           git
     - run: |
         set MSYSTEM=MINGW32
