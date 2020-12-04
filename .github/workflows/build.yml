@@ -22,7 +22,7 @@ jobs:
     - name: Create Archive(MSVC)
       run: |
         cd $Env:GITHUB_WORKSPACE
-        tar --exclude ".git*"　-a -cvf AviUtl-Shutdown-Plugin-MSVC.zip *
+        tar --exclude ".git*"　--exclude "*.zip"　-a -cvf AviUtl-Shutdown-Plugin-MSVC.zip *
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -43,17 +43,12 @@ jobs:
         asset_path: ./AviUtl-Shutdown-Plugin-MSVC.zip
         asset_name: AviUtl-Shutdown-Plugin-MSVC.zip
         asset_content_type: application/zip
-    - name: Remove MSVCfile
-      run: |
-         del AviUtl-Shutdown-Plugin-MSVC.zip
-         del shutdown_plugin.auf
     - name: Setup MSYS2
       uses: msys2/setup-msys2@v2
       with:
         msystem: MSYS
         update: true
         install: >-
-          gcc
           mingw-w64-cross-gcc
     - run: |
         set MSYSTEM=MINGW32
@@ -63,7 +58,7 @@ jobs:
     - name: Create Archive(MinGW)
       run: |
         cd $Env:GITHUB_WORKSPACE
-        tar --exclude ".git*"　-a -cvf AviUtl-Shutdown-Plugin-MinGW.zip *
+        tar --exclude ".git*"　--exclude "*.zip" -a -cvf AviUtl-Shutdown-Plugin-MinGW.zip *
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
