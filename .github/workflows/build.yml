@@ -11,7 +11,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Build
-      run: ./"Build MinGW.cmd"
+      run: ./"Build VS.cmd"
     - name: Create Archive
       run: |
         cd $Env:GITHUB_WORKSPACE
