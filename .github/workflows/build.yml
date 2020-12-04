@@ -15,7 +15,7 @@ jobs:
     - name: Create Archive
       run: |
         cd $Env:GITHUB_WORKSPACE
-        tar -a -cvf AviUtl-Shutdown-Plugin.zip *
+        tar --exclude ".git*"　-a -cvf AviUtl-Shutdown-Plugin.zip *
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
