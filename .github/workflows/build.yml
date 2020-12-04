@@ -49,7 +49,7 @@ jobs:
          del shutdown_plugin.auf
     - uses: msys2/setup-msys2@v2
     - name: Build-MinGW
-      run: g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
+      run: g++ -Wall -m32 -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
     - name: Create Archive(MinGW)
       run: |
         cd $Env:GITHUB_WORKSPACE
