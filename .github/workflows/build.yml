@@ -13,7 +13,9 @@ jobs:
     - name: Build
       run: g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
     - name: Create Archive
-      run: tar -a -cvf AviUtl-Shutdown-Plugin.zip -C shutdown_plugin.auf
+      run: |
+        cd $Env:GITHUB_WORKSPACE
+        tar -a -cvf AviUtl-Shutdown-Plugin.zip -C shutdown_plugin.auf
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
