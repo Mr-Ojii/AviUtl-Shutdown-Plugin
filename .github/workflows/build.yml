@@ -7,6 +7,9 @@ jobs:
 
     runs-on: windows-latest
 
+    env:
+      CC: i686-w64-mingw32-gcc
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
