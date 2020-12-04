@@ -12,3 +12,25 @@ jobs:
       uses: actions/checkout@v2
     - name: Build
       run: g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
+    - name: Create Archive
+      run: tar -a -cvf AviUtl-Shutdown-Plugin.zip -C Test *
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.sha }}
+        release_name: Release ${{ github.sha }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./AviUtl-Shutdown-Plugin.zip
+        asset_name: AviUtl-Shutdown-Plugin.zip
+        asset_content_type: application/zip
