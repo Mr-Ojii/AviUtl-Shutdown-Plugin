@@ -48,10 +48,6 @@ jobs:
          del AviUtl-Shutdown-Plugin-MSVC.zip
          del shutdown_plugin.auf
     - uses: msys2/setup-msys2@v2
-    - run: pacman -Sy
-    - run: pacman --noconfirm -S pacman-mirrors
-    - run: pacman --noconfirm -S mingw-w64-cross-gcc
-    - run: echo "::add-path::C:\\msys64\\opt\\bin"
     - name: Build-MinGW
       run: i686-w64-mingw32-g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def
     - name: Create Archive(MinGW)
