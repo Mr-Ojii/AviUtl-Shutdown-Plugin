@@ -12,6 +12,9 @@ jobs:
       uses: actions/checkout@v2
     - name: Setup msvc-dev-cmd
       uses: ilammy/msvc-dev-cmd@v1
+      with: 
+        arch: x86
+        sdk: 8.1  
     - name: Build
       run: ./"Build VS.cmd"
     - name: Create Archive
