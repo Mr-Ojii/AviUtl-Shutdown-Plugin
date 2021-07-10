@@ -29,7 +29,7 @@ jobs:
           mingw-w64-cross-gcc
     - run: |
         set MSYSTEM=MINGW32
-        msys2 -c 'i686-w64-mingw32-g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
+        msys2 -c 'i686-w64-mingw32-g++ -Wall -shared "-Wl,--dll,--enable-stdcall-fixup" -static-libgcc -static-libstdc++ -o shutdown_plugin.auf src/shutdown_plugin.cpp src/shutdown_plugin.def'
     - name: Create Archive(MinGW)
       run: |
         cd $Env:GITHUB_WORKSPACE
