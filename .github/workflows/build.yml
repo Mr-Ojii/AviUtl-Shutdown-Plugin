@@ -1,11 +1,31 @@
 name: build
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  build:
+  get_rev_list_count:
+    name: Get rev-list_count
+    runs-on: ubuntu-latest
+    outputs:
+      rev_list_count: ${{ steps.rev.outputs.REV_LIST_COUNT }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set REV_LIST_COUNT
+      id: rev
+      run: |
+        cd ${{ github.workspace }}
+        REVCOUNT=`git rev-list --count HEAD`
+        echo "::set-output name=REV_LIST_COUNT::${REVCOUNT}"
 
+  build:
     runs-on: windows-latest
+    needs: get_rev_list_count
 
     steps:
     - name: Checkout repository
@@ -40,8 +60,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: release-${{ github.sha }}
-        release_name: Release ${{ github.sha }}
+        tag_name: release-${{ needs.get_rev_list_count.outputs.rev_list_count }}
+        release_name: Release ${{ needs.get_rev_list_count.outputs.rev_list_count }}
         draft: false
         prerelease: false
     - name: Upload Release Asset
